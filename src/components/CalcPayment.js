@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Button from "./Button";
 import "./CalcPayment.css";
+import Balance from "./Balance";
 
 class Payment extends Component {
   constructor() {
@@ -11,11 +12,28 @@ class Payment extends Component {
     };
   }
 
+  getConversions() {
+    fetch("https://exchangeratesapi.io/api/latest?base=GBP")
+      .then(response => response.json())
+      .then(data => {
+        const rate = data.rates[this.state.alternateCurrency];
+        const total = this.props.total;
+        this.setState({
+          alternateBalance: (rate * total).toFixed(2)
+        });
+      });
+  }
+
+  componentDidMount() {
+    this.getConversions();
+  }
+
   selectCurrency = event => {
     const currency = event.target.value;
     this.setState({
       selectedCurrency: currency
     });
+    this.getConversions();
   };
 
   render() {

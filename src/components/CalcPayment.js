@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Button from "./Button";
 import "./CalcPayment.css";
-import Balance from "./Balance";
 
 class Payment extends Component {
   constructor() {
